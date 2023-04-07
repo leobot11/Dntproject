@@ -26,7 +26,7 @@ async def buat_log(bot):
         group_description = 'Jangan Hapus Atau Keluar Dari Grup Ini\n\nCreated By @AzazelProjectBot.\nJika menemukan kendala atau ingin menanyakan sesuatu\nHubungi : @KynanSupport.'
         group = await bot.create_supergroup(group_name, group_description)
         group_id = group.id
-        text = 'Grup Log Berhasil Dibuat,\nKetik `setlog` untuk menentapkan grup log ini sebagai tempat log bot\n'
+        text = 'Grup Log Berhasil Dibuat,\nKetik `setlog` untuk menentapkan grup log ini sebagai tempat log bot\n\n**Notes** : Ini adalah userbot tanpa prefix jadi tidak perlu memakai triger `.`'
         await bot.send_message(group_id, text)
 
         adder = BotLog(str(user_id), group_id)
