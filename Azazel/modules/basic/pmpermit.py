@@ -231,10 +231,9 @@ async def setpm_limit(client, message):
 
 
 @Client.on_message(filters.command(["pmpermit", "antipm"], "") & filters.me)
-async def onoff_pmpermit(client: Client, message: Message):
-    input_str = get_arg(message)
+async def onoff_pmpermit(client, message):
     user_id = client.me.id
-    
+    input_str = get_arg(message)
     if not input_str:
         await edit_or_reply(message, "**Gunakan format**: `antipm` on atau off")
         return
