@@ -23,11 +23,13 @@ Globals.__table__.create(checkfirst=True)
 
 
 def addgvar(user_id, variable, value):
-    if SESSION.query(Globals).filter(Globals.user_id == str(user_id)).one_or_none():
-        delgvar(user_id, variable)
+    query = SESSION.query(Globals).filter(Globals.user_id == str(user_id)).one_or_none()
+    if query is not None:
+        SESSION.delete(query)
     adder = Globals(user_id=str(user_id), variable=variable, value=value)
     SESSION.add(adder)
     SESSION.commit()
+
 
 
 def delgvar(user_id, variable):
