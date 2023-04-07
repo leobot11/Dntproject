@@ -44,11 +44,13 @@ def get_filter(user_id, chat_id, keyword):
 
 def get_filters(user_id):
     try:
-        return SESSION.query(Filters).filter(Filters.user_id == str(user_id)).all()
+        filters_list = SESSION.query(Filters).filter(Filters.user_id == str(user_id)).all()
+        return filters_list if len(filters_list) > 0 else None
     except:
         return None
     finally:
         SESSION.close()
+
 
 
 def add_filter(user_id, chat_id, keyword, reply, f_mesg_id):
