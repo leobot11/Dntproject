@@ -204,9 +204,9 @@ async def disapprovepm(client, message):
 @Client.on_message(filters.command(["setlimit"], "") & filters.me)
 async def setpm_limit(client, message):
     user_id = client.me.id
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await message.edit(
-            f"**Anda Harus Menyetel Var** `PM_AUTO_BAN` **Ke** `True`\n\n**Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `{cmd}setvar PM_AUTO_BAN True`"
+            f"**Anda Harus Menyetel Var** `PM_AUTO_BAN` **Ke** `True`\n\n**Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `setvar PM_AUTO_BAN True`"
         )
     try:
         from Azazel.core.SQL.globals import addgvar
@@ -226,7 +226,7 @@ async def setpm_limit(client, message):
     biji = await message.reply("`Processing...`")
     if input_str and not input_str.isnumeric():
         return await biji.edit("**Harap masukan angka untuk PM_LIMIT.**")
-    addgvar(str(user_id), "PM_LIMIT", input_str)
+    addgvar("PM_LIMIT", input_str)
     await biji.edit(f"**Set PM limit to** `{input_str}`")
 
 
@@ -244,7 +244,7 @@ async def onoff_pmpermit(client: Client, message: Message):
     elif input_str == "on":
         h_type = True
         
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         PMPERMIT = False
     else:
         PMPERMIT = True
@@ -252,10 +252,10 @@ async def onoff_pmpermit(client: Client, message: Message):
     if PMPERMIT and h_type:
         await edit_or_reply(message, "**PMPERMIT Sudah Diaktifkan**")
     elif PMPERMIT and not h_type:
-        delgvar(str(user_id), "PMPERMIT")
+        delgvar("PMPERMIT")
         await edit_or_reply(message, "**PMPERMIT Berhasil Dimatikan**")
     elif not PMPERMIT and h_type:
-        addgvar(str(user_id), "PMPERMIT", h_type)
+        addgvar("PMPERMIT", h_type)
         await edit_or_reply(message, "**PMPERMIT Berhasil Diaktifkan**")
     else:
         await edit_or_reply(message, "**PMPERMIT Sudah Dimatikan**")
