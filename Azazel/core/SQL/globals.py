@@ -93,7 +93,7 @@ def gvarstatus(user_id, variable):
 
 
 def addgvar(user_id, variable, value):
-    if SESSION.query(Globals).filter(Globals.user_id == str(user_id), Globals.variable == variable, Globals.value == value).one_or_none():
+    if SESSION.query(Globals).filter(Globals.user_id == str(user_id), Globals.variable == str(variable), Globals.value == value).all():
         delgvar(user_id, variable)
     adder = Globals(user_id, variable, value)
     SESSION.add(adder)
@@ -103,7 +103,7 @@ def addgvar(user_id, variable, value):
 def delgvar(user_id, variable):
     rem = (
         SESSION.query(Globals)
-        .filter(Globals.user_id == str(user_id), Globals.variable == variable)
+        .filter(Globals.user_id == str(user_id), Globals.variable == str(variable))
         .delete(synchronize_session="fetch")
     )
     if rem:
