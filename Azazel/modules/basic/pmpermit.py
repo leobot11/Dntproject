@@ -130,7 +130,7 @@ async def auto_accept(client, message):
     return False
 
 
-@Ubot(["ok", "y"], "")
+@Client.on_message(filters.command & filters.me(["ok", "y"], ""))
 async def approvepm(client, message):
     try:
         from Azazel.core.SQL.pm_permit_sql import approve
@@ -167,7 +167,7 @@ async def approvepm(client, message):
         return
 
 
-@Ubot(["no", "g"], "")
+@Client.on_message(filters.command & filters.me(["no", "g"], ""))
 async def disapprovepm(client, message):
     try:
         from Azazel.core.SQL.pm_permit_sql import dissprove
@@ -201,7 +201,7 @@ async def disapprovepm(client, message):
     )
 
 
-@Ubot(["setlimit"], "")
+@Client.on_message(filters.command & filters.me(["setlimit"], ""))
 async def setpm_limit(client, message):
     user_id = client.me.id
     if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
@@ -230,7 +230,7 @@ async def setpm_limit(client, message):
     await biji.edit(f"**Set PM limit to** `{input_str}`")
 
 
-@Ubot(["pmpermit", "antipm"], "")
+@Client.on_message(filters.command & filters.me(["pmpermit", "antipm"], ""))
 async def onoff_pmpermit(client: Client, message: Message):
     input_str = get_arg(message)
     user_id = client.me.id
@@ -261,7 +261,7 @@ async def onoff_pmpermit(client: Client, message: Message):
         await edit_or_reply(message, "**PMPERMIT Sudah Dimatikan**")
 
 
-@Ubot(["setpm"], "")
+@Client.on_message(filters.command & filters.me(["setpm"], ""))
 async def setpmpermit(client, message):
     user_id = client.me.id
     if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
@@ -286,7 +286,7 @@ async def setpmpermit(client, message):
     await tai.edit("**Pesan Berhasil Disimpan**")
 
 
-@Ubot(["getpm"], "")
+@Client.on_message(filters.command & filters.me(["getpm"], ""))
 async def get_pmermit(client, message):
     user_id = client.me.id
     if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
@@ -310,7 +310,7 @@ async def get_pmermit(client, message):
         )
 
 
-@Ubot(["resetpm"], "")
+@Client.on_message(filters.command & filters.me(["resetpm"], ""))
 async def reset_pmpermit(client, message):
     user_id = client.me.id
     if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
