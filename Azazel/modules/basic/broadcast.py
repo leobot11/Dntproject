@@ -80,12 +80,13 @@ async def gucast(client: Client, message: Message):
 
 @Ubot(["addbl"], "")
 async def bl_chat(client, message):
-    if len(message.command) != 2:
-        return await message.reply("**Gunakan Format:**\n `addbl [CHAT_ID]`")
     user_id = client.me.id
     semprul = get_blchat(str(user_id))
-    chat_id = int(message.text.strip().split()[1])
-    if chat_id in semprul:
+    chat_id = message.chat.id
+    chat = await client.get_chat(chat_id)
+    if chat.type == "private":
+        return await message.reply("Maaf, perintah ini hanya berlaku untuk grup.")
+    if chat in semprul:
         return await message.reply("Obrolan sudah masuk daftar Blacklist Gcast")
     add_blchat(str(user_id), chat_id)
     await message.edit("Obrolan Ditambahkan Ke Daftar Blacklist Gcast")
@@ -111,7 +112,8 @@ async def all_chats(client, message):
     nama_lu = get_blchat(str(user_id))
     for count, chat_id in enumerate(nama_lu, 1):
         try:
-            title = (await client.me.id.get_chat(chat_id)).title
+            chat = await client.get_chat(chat_id)
+            title = chat.title
         except Exception:
             title = "Private\n"
         j = 1
