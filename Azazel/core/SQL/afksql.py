@@ -2,8 +2,6 @@ from sqlalchemy import Boolean, Column, String, UnicodeText
 
 from . import BASE, SESSION
 
-Owner = 0
-
 
 class AFK(BASE):
     __tablename__ = "afk"
