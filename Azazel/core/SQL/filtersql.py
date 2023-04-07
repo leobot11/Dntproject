@@ -1,4 +1,4 @@
-"""
+
 
 from sqlalchemy import Column, Numeric, String, UnicodeText, BigInteger
 
@@ -36,6 +36,8 @@ Filters.__table__.create(checkfirst=True)
 def get_filter(user_id, chat_id, keyword):
     try:
         return SESSION.query(Filters).get((str(user_id), chat_id, keyword))
+    except:
+        return None
     finally:
         SESSION.close()
 
@@ -43,33 +45,32 @@ def get_filter(user_id, chat_id, keyword):
 def get_filters(user_id):
     try:
         return SESSION.query(Filters).filter(Filters.user_id == str(user_id)).all()
+    except:
+        return None
     finally:
         SESSION.close()
 
 
 def add_filter(user_id, chat_id, keyword, reply, f_mesg_id):
-    lu_babi = get_filter(user_id, chat_id, keyword)
-    if not lu_babi:
-        bangsat = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
-        SESSION.add(bangsat)
+    to_check = get_filter(user_id, chat_id, keyword)
+    if not to_check:
+        adder = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
+        SESSION.add(adder)
         SESSION.commit()
-        return True
     else:
-        onyet = SESSION.query(Filters).get(str(user_id), chat_id, keyword, reply, f_mesg_id)
-        SESSION.delete(onyet)
+        rem = SESSION.query(Filters).get(str(user_id), chat_id, keyword, reply, f_mesg_id)
+        SESSION.delete(rem)
         SESSION.commit()
-        bangsat = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
-        SESSION.add(bangsat)
+        adder = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
+        SESSION.add(adder)
         SESSION.commit()
-        return False
 
 
 def remove_filter(user_id, chat_id, keyword):
-    tai = get_filter(user_id, chat_id, keyword)
-    if not tai:
+    cek = get_filter(user_id, chat_id, keyword)
+    if not cek:
         return False
     else:
-        SESSION.delete(tai)
+        SESSION.delete(cek)
         SESSION.commit()
         return True
-"""
