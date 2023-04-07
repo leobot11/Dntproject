@@ -88,8 +88,8 @@ async def filters_re(client, message):
     chat_id = message.chat.id
     babi = get_filters(str(user_id))
     for word in babi:
-        word_str = word.decode('utf-8')
-        pattern = r"( |^|[^\w])" + re.escape(word) + r"( |$|[^\w])"
+        word_str = str(word)
+        pattern = r"( |^|[^\w])" + re.escape(word_str) + r"( |$|[^\w])"
         if re.search(pattern, text, flags=re.IGNORECASE):
             sempak = get_filter(str(user_id), str(chat_id), word_str)
             data_type = sempak["type"]
