@@ -133,11 +133,11 @@ async def set_gruplog(client, message):
 async def set_log(client, message):
     user_id = client.me.id
     chat_id = message.chat.id
-    group_id = await client.get_chat(int(chat_id))
     chat = await client.get_chat(chat_id)
+    group_id = chat_id if chat.type == "channel" else chat.id
     if chat.type == "private":
         return await message.reply("Maaf, gunakan perintah ini di grup log anda.")
-    set_botlog(str(user_id), group_id)
+    set_botlog(str(user_id), str(group_id))
     await message.reply_text(f"ID Grup Log telah diatur ke {group_id} untuk grup ini.")
 
 
