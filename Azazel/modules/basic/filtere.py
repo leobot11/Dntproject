@@ -12,6 +12,7 @@ from Azazel.core import *
 async def save_filters(client, message):
     user_id = client.me.id
     chat_id = message.chat.id
+    botlog_group_id = get_botlog(str(user_id))
     if len(message.command) < 2 or not message.reply_to_message:
         return await message.reply_text(
             f"**Gunakan Format:**\nbalas kepesan atau sticker `savefilter` [nama filter] untuk save filter."
@@ -39,7 +40,9 @@ async def save_filters(client, message):
         if _type == "text"
         else message.reply_to_message.sticker.file_id,
     }
-    add_filter(str(user_id), int(chat_id), keyword, reply)
+    anu = await msg.forward(botlog_group_id)
+    msg_id = anu.id
+    add_filter(str(user_id), int(chat_id), keyword, reply, msg_id)
     await message.reply_text(f"**Filter {keyword} disimpan!.**")
 
 
