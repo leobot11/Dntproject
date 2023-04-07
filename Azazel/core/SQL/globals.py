@@ -21,12 +21,11 @@ class Globals(BASE):
 Globals.__table__.create(checkfirst=True)
 
 
-def gvarstatus(variable):
+def gvarstatus(user_id):
     try:
         return (
             SESSION.query(Globals)
             .filter(Globals.user_id == str(user_id))
-            .filter(Globals.variable == str(variable)
             .first()
             .value
         )
