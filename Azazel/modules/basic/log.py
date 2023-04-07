@@ -133,7 +133,7 @@ async def set_gruplog(client, message):
 async def set_log(client, message):
     user_id = client.me.id
     chat_id = message.chat.id
-    group_id = await client.get_chat(chat_id)
+    group_id = await client.get_chat(int(chat_id))
     chat = await client.get_chat(chat_id)
     if chat.type == "private":
         return await message.reply("Maaf, gunakan perintah ini di grup log anda.")
