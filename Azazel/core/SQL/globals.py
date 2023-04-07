@@ -12,8 +12,8 @@ class Globals(BASE):
     variable = Column(String, primary_key=True, nullable=False)
     value = Column(UnicodeText, primary_key=True, nullable=False)
 
-    def __init__(self, variable, value, user_id):
-        self.user_id = (user_id)
+    def __init__(self, user_id, variable, value):
+        self.user_id = str(user_id)
         self.variable = str(variable)
         self.value = value
         
