@@ -1,4 +1,4 @@
-
+"""
 import time
 from pyrogram import Client, filters
 from pyrogram.types import Message
@@ -124,3 +124,4 @@ add_command_help(
         ],
     ],
 )
+"""
