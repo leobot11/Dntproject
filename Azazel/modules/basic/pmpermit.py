@@ -204,15 +204,6 @@ async def disapprovepm(client, message):
 @Client.on_message(filters.command(["setlimit"], "") & filters.me)
 async def setpm_limit(client, message):
     user_id = client.me.id
-    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
-        return await message.edit(
-            f"**Anda Harus Menyetel Var** `PM_AUTO_BAN` **Ke** `True`\n\n**Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `{cmd}setvar PM_AUTO_BAN True`"
-        )
-    try:
-        from Azazel.core.SQL.globals import addgvar
-    except AttributeError:
-        await message.edit("**Running on Non-SQL mode!**")
-        return
     input_str = (
         message.text.split(None, 1)[1]
         if len(
