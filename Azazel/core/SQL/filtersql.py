@@ -53,7 +53,6 @@ def add_filter(user_id, chat_id, keyword, reply, f_mesg_id):
         adder = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
         SESSION.add(adder)
         SESSION.commit()
-        return True
     else:
         rem = SESSION.query(Filters).get(str(user_id), chat_id, keyword, reply, f_mesg_id)
         SESSION.delete(rem)
@@ -61,7 +60,6 @@ def add_filter(user_id, chat_id, keyword, reply, f_mesg_id):
         adder = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
         SESSION.add(adder)
         SESSION.commit()
-        return False
 
 
 def remove_filter(user_id, chat_id, keyword):
