@@ -131,14 +131,13 @@ async def set_gruplog(client, message):
 
 @Ubot("setlog", "")
 async def set_log(client, message):
-    try:
-        group_id = int(message.text.split(" ")[1])
-    except (ValueError, IndexError):
-        await message.reply_text("Format yang Anda masukkan salah. Gunakan format `setlog id_grup`.")
-        return
     user_id = client.me.id
     chat_id = message.chat.id
-    set_botlog(group_id)
+    group_id = await client.get_chat(chat_id)
+    chat = await client.get_chat(chat_id)
+    if chat.type == "private":
+        return await message.reply("Maaf, gunakan perintah ini di grup log anda.")
+    set_botlog(str(user_id), group_id)
     await message.reply_text(f"ID Grup Log telah diatur ke {group_id} untuk grup ini.")
 
 
