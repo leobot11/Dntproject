@@ -36,13 +36,13 @@ async def incomingpm(client: Client, message: Message):
         pass
       
     user_id = client.me.id
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return
     if await auto_accept(client, message) or message.from_user.is_self:
         message.continue_propagation()
     if message.chat.id != 777000:
-        PM_LIMIT = gvarstatus(str(user_id), "PM_LIMIT") or 5
-        getmsg = gvarstatus(str(user_id), "unapproved_msg")
+        PM_LIMIT = gvarstatus("PM_LIMIT") or 5
+        getmsg = gvarstatus("unapproved_msg")
         if getmsg is not None:
             UNAPPROVED_MSG = getmsg
         else:
@@ -226,7 +226,7 @@ async def setpm_limit(client, message):
     biji = await message.reply("`Processing...`")
     if input_str and not input_str.isnumeric():
         return await biji.edit("**Harap masukan angka untuk PM_LIMIT.**")
-    addgvar("PM_LIMIT", input_str, str(user_id))
+    addgvar("PM_LIMIT", input_str)
     await biji.edit(f"**Set PM limit to** `{input_str}`")
 
 
@@ -243,7 +243,7 @@ async def onoff_pmpermit(client, message):
     elif input_str == "on":
         h_type = True
         
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         PMPERMIT = False
     else:
         PMPERMIT = True
@@ -251,10 +251,10 @@ async def onoff_pmpermit(client, message):
     if PMPERMIT and h_type:
         await edit_or_reply(message, "**PMPERMIT Sudah Diaktifkan**")
     elif PMPERMIT and not h_type:
-        delgvar(str(user_id), "PMPERMIT")
+        delgvar("PMPERMIT")
         await edit_or_reply(message, "**PMPERMIT Berhasil Dimatikan**")
     elif not PMPERMIT and h_type:
-        addgvar(str(user_id), "PMPERMIT", h_type)
+        addgvar("PMPERMIT", h_type)
         await edit_or_reply(message, "**PMPERMIT Berhasil Diaktifkan**")
     else:
         await edit_or_reply(message, "**PMPERMIT Sudah Dimatikan**")
@@ -263,7 +263,7 @@ async def onoff_pmpermit(client, message):
 @Client.on_message(filters.command(["setpm"], "") & filters.me)
 async def setpmpermit(client, message):
     user_id = client.me.id
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await message.reply(
             "**Anda Harus Menyetel Var** `PM_AUTO_BAN` **Ke** `True`\n\n**Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `.setvar PM_AUTO_BAN True`"
         )
@@ -273,14 +273,14 @@ async def setpmpermit(client, message):
         await message.edit("**Running on Non-SQL mode!**")
         return
     tai = await message.reply("`Processing...`")
-    nob = sql.gvarstatus(str(user_id), "unapproved_msg")
+    nob = sql.gvarstatus("unapproved_msg")
     message = message.reply_to_message
     if nob is not None:
-        sql.delgvar(str(user_id), "unapproved_msg")
+        sql.delgvar("unapproved_msg")
     if not message:
         return await tai.edit("**Mohon Reply Ke Pesan**")
     msg = message.text
-    sql.addgvar(str(user_id), "unapproved_msg", msg)
+    sql.addgvar("unapproved_msg", msg)
     
     await tai.edit("**Pesan Berhasil Disimpan**")
 
@@ -288,7 +288,7 @@ async def setpmpermit(client, message):
 @Client.on_message(filters.command(["getpm"], "") & filters.me)
 async def get_pmermit(client, message):
     user_id = client.me.id
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await message.edit(
             "**Anda Harus Menyetel Var** `PM_AUTO_BAN` **Ke** `True`\n\n**Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `.setvar PM_AUTO_BAN True`"
         )
@@ -298,7 +298,7 @@ async def get_pmermit(client, message):
         await message.edit("**Running on Non-SQL mode!**")
         return
     zel = await message.reply("`Processing...`")
-    nob = sql.gvarstatus(str(user_id), "unapproved_msg")
+    nob = sql.gvarstatus("unapproved_msg")
     if nob is not None:
         await zel.edit("**Pesan PMPERMIT Yang Sekarang:**" f"\n\n{nob}")
     else:
@@ -312,7 +312,7 @@ async def get_pmermit(client, message):
 @Client.on_message(filters.command(["resetpm"], "") & filters.me)
 async def reset_pmpermit(client, message):
     user_id = client.me.id
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await message.edit(
             f"**Anda Harus Menyetel Var** `PM_AUTO_BAN` **Ke** `True`\n\n**Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `{cmd}setvar PM_AUTO_BAN True`"
         )
@@ -322,12 +322,12 @@ async def reset_pmpermit(client, message):
         await message.edit("**Running on Non-SQL mode!**")
         return
     sok = await message.reply("`Processing...`")
-    nob = sql.gvarstatus(str(user_id), "unapproved_msg")
+    nob = sql.gvarstatus("unapproved_msg")
 
     if nob is None:
         await sok.edit("**Pesan Antipm Anda Sudah Default**")
     else:
-        sql.delgvar(str(user_id), "unapproved_msg")
+        sql.delgvar("unapproved_msg")
         
         await sok.edit("**Berhasil Mengubah Pesan Custom Antipm menjadi Default**")
 
