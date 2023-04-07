@@ -69,7 +69,7 @@ class Globals(BASE):
     variable = Column(String, primary_key=True, nullable=False)
     value = Column(UnicodeText, primary_key=True, nullable=False)
 
-    def __init__(self, variable, value):
+    def __init__(self, user_id, variable, value):
         self.variable = str(user_id)
         self.variable = str(variable)
         self.value = value
@@ -82,8 +82,7 @@ def gvarstatus(user_id, variable):
     try:
         return (
             SESSION.query(Globals)
-            .filter(Globals.user_id == str(user_id))
-            .filter(Globals.variable == str(variable))
+            .filter(Globals.user_id == str(user_id), variable)
             .first()
             .value
         )
@@ -94,9 +93,9 @@ def gvarstatus(user_id, variable):
 
 
 def addgvar(user_id, variable, value):
-    if SESSION.query(Globals).filter(Globals.user_id == str(user_id)).filter(Globals.variable == str(variable)).one_or_none():
+    if SESSION.query(Globals).filter(Globals.user_id == str(user_id)).all():
         delgvar(user_id, variable)
-    adder = Globals(str(user_id), str(variable), value)
+    adder = Globals(str(user_id), variable, value)
     SESSION.add(adder)
     SESSION.commit()
 
@@ -104,8 +103,7 @@ def addgvar(user_id, variable, value):
 def delgvar(user_id, variable):
     rem = (
         SESSION.query(Globals)
-        .filter(Globals.user_id == str(user_id))
-        .filter(Globals.variable == str(variable))
+        .filter(Globals.user_id == str(user_id), variable=variable)
         .delete(synchronize_session="fetch")
     )
     if rem:
