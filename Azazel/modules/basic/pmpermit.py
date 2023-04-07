@@ -204,7 +204,7 @@ async def disapprovepm(client, message):
 @Client.on_message(filters.command(["setlimit"], "") & filters.me)
 async def setpm_limit(client, message):
     user_id = client.me.id
-    if gvarstatus(str(user_id), "PMPERMIT") and gvarstatus(str(user_id), "PMPERMIT") == "false":
+    if gvarstatus("PMPERMIT") and gvarstatus("PMPERMIT") == "false":
         return await message.edit(
             f"**Anda Harus Menyetel Var** `PM_AUTO_BAN` **Ke** `True`\n\n**Bila ingin Mengaktifkan PMPERMIT Silahkan Ketik:** `{cmd}setvar PM_AUTO_BAN True`"
         )
@@ -226,7 +226,7 @@ async def setpm_limit(client, message):
     biji = await message.reply("`Processing...`")
     if input_str and not input_str.isnumeric():
         return await biji.edit("**Harap masukan angka untuk PM_LIMIT.**")
-    addgvar(str(user_id), "PM_LIMIT", input_str)
+    addgvar("PM_LIMIT", input_str, str(user_id))
     await biji.edit(f"**Set PM limit to** `{input_str}`")
 
 
