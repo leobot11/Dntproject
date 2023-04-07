@@ -103,7 +103,7 @@ def addgvar(user_id, variable, value):
 def delgvar(user_id, variable):
     rem = (
         SESSION.query(Globals)
-        .filter(Globals.user_id=user_id, variable=variable)
+        .filter(Globals.user_id == str(user_id))
         .delete(synchronize_session="fetch")
     )
     if rem:
