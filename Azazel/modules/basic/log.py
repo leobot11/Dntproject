@@ -30,7 +30,7 @@ async def monito_p_m_s(client, message):
     botlog_group_id = get_botlog(str(user_id))
     if not botlog_group_id:
         return
-    if gvarstatus(str(user_id), "PMLOG") and gvarstatus(str(user_id), "PMLOG") == "false":
+    if gvarstatus("PMLOG") and gvarstatus("PMLOG") == "false":
         return
     if not no_log_pms_sql.is_approved(message.chat.id) and message.chat.id != 777000:
         if LOG_CHATS_.RECENT_USER != message.chat.id:
@@ -63,7 +63,7 @@ async def log_tagged_messages(client, message):
     botlog_group_id = get_botlog(str(user_id))
     if not botlog_group_id:
         return
-    if gvarstatus(str(user_id), "GRUPLOG") and gvarstatus(str(user_id), "GRUPLOG") == "false":
+    if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG") == "false":
         return
     if (no_log_pms_sql.is_approved(message.chat.id)):
         return
@@ -79,7 +79,7 @@ async def log_tagged_messages(client, message):
         disable_web_page_preview=True,
     )
 
-"""
+
 @Ubot(["pmlog"], "")
 async def set_pmlog(client, message):
     cot = get_arg(message)
@@ -88,7 +88,7 @@ async def set_pmlog(client, message):
     elif cot == "on":
         noob = True
     user_id = client.me.id
-    if gvarstatus(str(user_id), "PMLOG") and gvarstatus(str(user_id), "PMLOG").value == "false":
+    if gvarstatus("PMLOG") and gvarstatus("PMLOG").value == "false":
         PMLOG = False
     else:
         PMLOG = True
@@ -96,10 +96,10 @@ async def set_pmlog(client, message):
         if noob:
             await message.edit("**PM Log Sudah Diaktifkan**")
         else:
-            delgvar(str(user_id), "PMLOG")
+            delgvar("PMLOG")
             await message.edit("**PM Log Berhasil Dimatikan**")
     elif noob:
-        addgvar(str(user_id), "PMLOG", noob)
+        addgvar("PMLOG", noob)
         await message.edit("**PM Log Berhasil Diaktifkan**")
     else:
         await message.edit("**PM Log Sudah Dimatikan**")
@@ -112,7 +112,7 @@ async def set_gruplog(client, message):
     elif cot == "on":
         noob = True
     user_id = client.me.id
-    if gvarstatus(str(user_id), "GRUPLOG") and gvarstatus(str(user_id), "GRUPLOG").value == "false":
+    if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG").value == "false":
         GRUPLOG = False
     else:
         GRUPLOG = True
@@ -120,14 +120,14 @@ async def set_gruplog(client, message):
         if noob:
             await message.edit("**Group Log Sudah Diaktifkan**")
         else:
-            delgvar(str(user_id), "GRUPLOG")
+            delgvar("GRUPLOG")
             await message.edit("**Group Log Berhasil Dimatikan**")
     elif noob:
-        addgvar(str(user_id), "GRUPLOG", noob)
+        addgvar("GRUPLOG", noob)
         await message.edit("**Group Log Berhasil Diaktifkan**")
     else:
         await message.edit("**Group Log Sudah Dimatikan**")
-"""
+
 
 @Ubot("setlog", "")
 async def set_log(client, message):
@@ -138,7 +138,7 @@ async def set_log(client, message):
         return
     user_id = client.me.id
     chat_id = message.chat.id
-    set_botlog(str(user_id), group_id)
+    set_botlog(group_id)
     await message.reply_text(f"ID Grup Log telah diatur ke {group_id} untuk grup ini.")
 
 
@@ -147,6 +147,14 @@ add_command_help(
     [
         [
             "setlog",
+            "Sebelum mengaktifkan fitur pmlog dan taglog anda harus mengatur setlog id_grup log anda terlebih dahulu.",
+        ],
+        [
+            "taglog on or off",
+            "Sebelum mengaktifkan fitur pmlog dan taglog anda harus mengatur setlog id_grup log anda terlebih dahulu.",
+        ],
+        [
+            "pmlog on or off",
             "Sebelum mengaktifkan fitur pmlog dan taglog anda harus mengatur setlog id_grup log anda terlebih dahulu.",
         ],
 
