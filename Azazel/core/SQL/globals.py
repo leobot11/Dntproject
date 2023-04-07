@@ -65,10 +65,12 @@ from sqlalchemy import Column, String, UnicodeText
 
 class Globals(BASE):
     __tablename__ = "globals"
+    user_id = Column(String(14), primary_key=True, nullable=False)
     variable = Column(String, primary_key=True, nullable=False)
     value = Column(UnicodeText, primary_key=True, nullable=False)
 
     def __init__(self, variable, value):
+        self.variable = str(user_id)
         self.variable = str(variable)
         self.value = value
 
@@ -76,10 +78,11 @@ class Globals(BASE):
 Globals.__table__.create(checkfirst=True)
 
 
-def gvarstatus(variable):
+def gvarstatus(user_id, variable):
     try:
         return (
             SESSION.query(Globals)
+            .filter(Globals.user_id == str(user_id))
             .filter(Globals.variable == str(variable))
             .first()
             .value
@@ -90,17 +93,18 @@ def gvarstatus(variable):
         SESSION.close()
 
 
-def addgvar(variable, value):
-    if SESSION.query(Globals).filter(Globals.variable == str(variable)).one_or_none():
-        delgvar(variable)
-    adder = Globals(str(variable), value)
+def addgvar(user_id, variable, value):
+    if SESSION.query(Globals).filter(Globals.user_id == str(user_id)).filter(Globals.variable == str(variable)).one_or_none():
+        delgvar(user_id, variable)
+    adder = Globals(str(user_id), str(variable), value)
     SESSION.add(adder)
     SESSION.commit()
 
 
-def delgvar(variable):
+def delgvar(user_id, variable):
     rem = (
         SESSION.query(Globals)
+        .filter(Globals.user_id == str(user_id))
         .filter(Globals.variable == str(variable))
         .delete(synchronize_session="fetch")
     )
