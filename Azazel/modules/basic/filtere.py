@@ -1,5 +1,5 @@
 
-
+"""
 import re
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton as Ikb
@@ -134,3 +134,4 @@ add_command_help(
         [f"filters", "Melihat list filter."],
     ],
 )
+"""
