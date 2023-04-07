@@ -88,7 +88,7 @@ async def set_pmlog(client, message):
     elif cot == "on":
         noob = True
     user_id = client.me.id
-    if gvarstatus("PMLOG") and gvarstatus("PMLOG").value == "false":
+    if gvarstatus("PMLOG") and gvarstatus("PMLOG") == "false":
         PMLOG = False
     else:
         PMLOG = True
@@ -112,7 +112,7 @@ async def set_gruplog(client, message):
     elif cot == "on":
         noob = True
     user_id = client.me.id
-    if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG").value == "false":
+    if gvarstatus("GRUPLOG") and gvarstatus("GRUPLOG") == "false":
         GRUPLOG = False
     else:
         GRUPLOG = True
