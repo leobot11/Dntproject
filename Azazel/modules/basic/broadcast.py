@@ -86,7 +86,7 @@ async def bl_chat(client, message):
     chat = await client.get_chat(chat_id)
     if chat.type == "private":
         return await message.reply("Maaf, perintah ini hanya berlaku untuk grup.")
-    if chat in semprul:
+    if chat_id in semprul:
         return await message.reply("Obrolan sudah masuk daftar Blacklist Gcast")
     add_blchat(str(user_id), chat_id)
     await message.edit("Obrolan Ditambahkan Ke Daftar Blacklist Gcast")
