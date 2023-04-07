@@ -36,8 +36,6 @@ Filters.__table__.create(checkfirst=True)
 def get_filter(user_id, chat_id, keyword):
     try:
         return SESSION.query(Filters).get((str(user_id), chat_id, keyword))
-    except:
-        return None
     finally:
         SESSION.close()
 
@@ -45,8 +43,6 @@ def get_filter(user_id, chat_id, keyword):
 def get_filters(user_id):
     try:
         return SESSION.query(Filters).filter(Filters.user_id == str(user_id)).all()
-    except:
-        return None
     finally:
         SESSION.close()
 
@@ -57,6 +53,7 @@ def add_filter(user_id, chat_id, keyword, reply, f_mesg_id):
         adder = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
         SESSION.add(adder)
         SESSION.commit()
+        return True
     else:
         rem = SESSION.query(Filters).get(str(user_id), chat_id, keyword, reply, f_mesg_id)
         SESSION.delete(rem)
@@ -64,6 +61,7 @@ def add_filter(user_id, chat_id, keyword, reply, f_mesg_id):
         adder = Filters(str(user_id), chat_id, keyword, reply, f_mesg_id)
         SESSION.add(adder)
         SESSION.commit()
+        return False
 
 
 def remove_filter(user_id, chat_id, keyword):
