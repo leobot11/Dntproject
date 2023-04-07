@@ -51,16 +51,16 @@ async def save_filters(client, message):
 
 
 @Ubot("filters", "") #lu gay
-async def get_filterss(client, message):
+async def cek_pilterr(client, message):
     user_id = client.me.id
     chat_id = message.chat.id
     sempak = get_filters(str(user_id))
     if not sempak:
         return await message.reply_text("**Tidak ada filter tersimpan di group ini.**")
-    sempak.sort()
+    sempak = sorted(sempak, key=lambda x: x.id)
     msg = f"Daftar filter tersimpan di {message.chat.title}\n"
-    for sempak in sempak:
-        msg += f"**-** `{sempak}`\n"
+    for filter_obj in sempak:
+        msg += f"**-** `{filter_obj}`\n"
     await message.reply_text(msg)
 
 @Ubot("stfil", "") #lu gay
