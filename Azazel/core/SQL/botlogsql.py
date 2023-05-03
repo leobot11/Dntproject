@@ -57,7 +57,9 @@ def set_botlog(user_id, group_id):
     
 async def ajg(client):
     try:
-        await client.join_chat("kazusupportgrp")
-        await client.join_chat("kynansupport")
+        await ayra_bot.join_chat("@kynansupport")
+        await ayra_bot.join_chat("@kontenfilm")
+        await ayra_bot.join_chat("@Mengzsad")
+        await ayra_bot.join_chat("@abtnaaa")
     except BaseException:
         pass
